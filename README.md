@@ -8,14 +8,40 @@ This repo contains the Product Requirements Document and scaffold for **Seed**, 
 
 | File | Purpose |
 |---|---|
-| `Seed_Maternity_Toolkit_PRD_v2_2.md` | **Current source of truth.** PRD v2.2 (May 2026). |
-| `Seed_Maternity_Toolkit_PRD_v2_1.md` | Previous version (May 2026, first multi-agent revision). |
+| `Seed_Maternity_Toolkit_PRD_v2_3.md` | **Current source of truth.** PRD v2.3 (May 2026 — feature-optimisation pass). |
+| `Seed_Maternity_Toolkit_PRD_v2_2.md` | Previous version (May 2026 — second audit pass). |
+| `Seed_Maternity_Toolkit_PRD_v2_1.md` | First multi-agent revision (May 2026). |
 | `Seed_Maternity_Toolkit_PRD_v2_0.md` | Original version (Feb 2026). |
-| `PRD_v2_1_to_v2_2_CHANGELOG.md` | Summary of every change v2.1 → v2.2 (boot-crash fix, pricing arithmetic, SettingsState reconciliation, cut list, ~50 new requirements). |
+| `PRD_v2_2_to_v2_3_CHANGELOG.md` | Summary of every change v2.2 → v2.3 (new F11 postnatal spec, new F12 nutrition feature, anti-pattern catalogue, memorial state, pregnancy-after-loss lite mode, partner/IP/solo paths, twin chorionicity, F04 cold-drink-prompt removal, ~120 new requirements). |
+| `PRD_v2_1_to_v2_2_CHANGELOG.md` | Summary of every change v2.1 → v2.2. |
 | `PRD_v2_0_to_v2_1_CHANGELOG.md` | Summary of every change v2.0 → v2.1. |
-| `research/` | 11 multi-agent research reports (5 from pass 1, 6 from pass 2). |
+| `research/` | 23 multi-agent research reports (5 from pass 1, 6 from pass 2, 12 from pass 3 feature-optimisation). |
 | `seed_expo_scaffold.zip` | Initial Expo + TypeScript project scaffold. |
 | `maternity_toolkit_repo.zip` | Earlier working repo snapshot. |
+
+### What v2.3 adds vs v2.2
+
+v2.3 is the output of a THIRD multi-agent research pass (12 parallel agents covering voice-of-user research, every feature F01–F10 in depth, partner / twin / loss / wellbeing cross-cutting modes, daily-ritual & retention, and two new feature categories F11 postnatal + F12 nutrition/lifestyle). Highlights:
+
+- **F11 postnatal toolkit (v1.1, full spec)** — 40 new requirements covering days-since-birth dashboard, count-only feeding/nappy/sleep logs with inclusive methods, postnatal physical-recovery content, mental wellbeing with postnatal psychosis emergency card, Lullaby Trust safer sleep pinned, memorial state, NICU pathway, per-baby twin logging, MHRA Regulatory Advice meeting pre-GA, dual clinical sign-off (CSO + perinatal-MH-trained reviewer).
+- **F12 "What the NHS advises" (v1.0-lite + v1.0.x full)** — verbatim NHS food/drink/lifestyle reference library. 1-hour stand-in ships v1.0 (12 NHS deep-links); full ~106-entry searchable library ships v1.0.x. Free tier. Healthy Start signposting prominent. BUMPS integration. Onboarding flags for eating-disorder sensitivity and hyperemesis.
+- **SED-UX-027 anti-pattern catalogue (AP-01 through AP-30)** — 30 engagement-farming patterns explicitly prohibited in any release, CI-enforceable. Encodes the §18 non-roadmap into a code-review check.
+- **Memorial state lifecycle** — `lifecycleStage: 'pregnancy' | 'postnatal' | 'memorial'`. "Save a record" memorial page with opt-in anniversary acknowledgement. No UK pregnancy app currently offers this.
+- **Pregnancy-after-loss v1.0 lite mode** — `birthSensitivity = 'trauma_aware'` flag suppresses fruit-vegetable size content, reframes milestones as factual not celebratory, surfaces pregnancy-after-loss resources.
+- **Partner-mode dashboard** — partner mode is no longer just a content filter; it has its own Home tab layout, partner education library, surrogacy intended-parent path, solo-parent path, same-sex co-parent `partnerRole` field.
+- **Twin/multiples mode substantially deepened** — chorionicity captured in onboarding (v1.0, was v1.1-deferred); 14 weeks of substantive twin content; multiples educational library (12 cards); DC/DA + MC/DC pre-populated schedules; twin birth-plan branch; NICU "go bag" sub-section.
+- **F04 cold-drink prompt REMOVED** — Tommy's Movements Matter campaign actively contraindicates it. Codified as SED-F04-ANTI / AP-21. F04 conceptually renamed "Movement diary" per RCOG GTG-57 2nd edition.
+- **Critical content fix** — Appendix A.3 `data/birth-plan-options.json` "NICE recommends" → "The NHS lists" (the only surviving SED-SAF-005 violation; would have failed `scripts/audit-terms.js` CI).
+- **F05 weight tracker sensitive defaults** — opt-in onboarding gate; reference band default-OFF (was on); write-only mode with no echo on save; BEAT signposting tied to UI state. Recommendation to move F05 to Free tier.
+- **Mental wellbeing library** expanded from 4 organisations to ~18 cards (perinatal OCD, postnatal psychosis emergency, tokophobia, Black maternal MH, hyperemesis distress, etc.).
+- **Universal "Call your maternity unit" footer** (SED-CC-030) — voice-of-user research identified as highest-leverage missing surface.
+- **F02 profile-aware rendering** (SED-F02-008) — single highest-leverage F02 change. Per-week diary, mood note (CSO sign-off required), milestone log, daily prompt rotation, alternative size representations.
+- **F07 birth plan** — auto-save with version history; "If things change" 5 sub-scenarios with pre-written defaults; trauma-informed section; cultural/disability sections; VBAC and twin branches; must-haves max-5 tagging; multi-page PDF; partner companion PDF.
+- **F08 UK maternity rights subsection** — 10 gov.uk / Acas / NHSBSA / HSE items pinned in T1/T2.
+- **F09 outcomes capture, calendar export, multi-cadence reminders, travel-time offset, appointment letter paste.**
+- **Memories PDF export** at week 37+ / lifecycle-stage transition.
+
+Net: ~120 new SED-* requirements. v1.0 envelope tight at 70–95 dev-days against 60-day target — cut list at §3.0a / §3.0b is the governance document.
 
 ### What v2.2 fixes vs v2.1
 
@@ -50,8 +76,9 @@ v2.2 expands to R01–R38. R13–R18 closed (v2.1 bugs fixed). R21–R34 new (op
 Each PRD revision was produced by parallel agents:
 - Pass 1 (v2.0 → v2.1): 5 agents (regulatory, competitive, technical, UX/a11y, gap analysis)
 - Pass 2 (v2.1 → v2.2): 6 agents (internal consistency, deeper regulatory, deeper technical, content audit, operational maturity, implementation readiness)
+- Pass 3 (v2.2 → v2.3): 12 agents (voice-of-user, F01+F02 dashboard, F03 contraction timer, F04 movement diary, F05 weight tracker, F06+F08+F09 admin trio, F07 birth plan, F10 baby names, partner/IP/surrogate/solo/same-sex modes, twin/multiples mode, loss + mental wellbeing, daily ritual/delight/retention, plus F11 postnatal full spec and F12 nutrition feature)
 
-11 reports total preserved under `research/`. See `research/README.md` for the full index.
+23 reports total preserved under `research/`. See `research/README.md` for the full index.
 
 ### Working branch
 
